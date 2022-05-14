@@ -21,132 +21,126 @@
 
 void delay(int a)
 {
-	for (uint32_t i=0; i<a ; i++);
+	for (uint32_t i=0;i<a;i++);
 }
+int message=1;
 int main(void)
 {
-    /* Loop forever */
-	uint16_t message = 0;
-	GPIO_Handle_t Led;
-	Led.pGPIOx = GPIOD;
-	Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-	Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
-	Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	GPIO_PeriClockControl(GPIOD, ENABLE);
-	GPIO_Init(&Led);
+	    GPIO_Handle_t Led,INP;
+		Led.pGPIOx = GPIOD;
+		Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+		Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+		Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
+		Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+		GPIO_PeriClockControl(GPIOD, ENABLE);
+		GPIO_Init(&Led);
 
-	Led.pGPIOx = GPIOD;
-	Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
-	Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
-	Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	GPIO_PeriClockControl(GPIOD, ENABLE);
-	GPIO_Init(&Led);
+		Led.pGPIOx = GPIOD;
+		Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+		Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+		Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
+		Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+		GPIO_PeriClockControl(GPIOD, ENABLE);
+		GPIO_Init(&Led);
 
-	Led.pGPIOx = GPIOD;
-	Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-	Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
-	Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	GPIO_PeriClockControl(GPIOD, ENABLE);
-	GPIO_Init(&Led);
+		Led.pGPIOx = GPIOD;
+		Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+		Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+		Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
+		Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+		GPIO_PeriClockControl(GPIOD, ENABLE);
+		GPIO_Init(&Led);
 
-	Led.pGPIOx = GPIOD;
-	Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
-	Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-	Led.GPIO_PinConfig.GPIO_PinOPType= GPIO_OP_TYPE_PP;
-	GPIO_PeriClockControl(GPIOD, ENABLE);
-	GPIO_Init(&Led);
+		Led.pGPIOx = GPIOD;
+		Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
+		Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+		Led.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST ;
+		Led.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+		GPIO_PeriClockControl(GPIOD, ENABLE);
+		GPIO_Init(&Led);
 
-	Led.pGPIOx = GPIOA;
-	Led.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	GPIO_Init(&Led);
-	Led.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_0;
+		INP.pGPIOx=GPIOA;
+		INP.GPIO_PinConfig.GPIO_PinMode=GPIO_MODE_IN;
+		GPIO_Init(&INP);
 
-
-	while(1)
-	{
-		if(GPIO_ReadFromInputPin(GPIOA, GPIO_PIN_NO_0) == ENABLE)
+		while(1)
 		{
-			++message;
-			if(message == 1)
-			{
-				GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_14);
-			}
-			else if(message == 2)
-			{
-				while(message == 2)
-				{
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
-				delay(50000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_12, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-				delay(50000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
-				delay(50000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_15, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-				delay(50000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
+			if(GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0)==ENABLE){
+				if(message==1){
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_14);
+					if(GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0)==ENABLE)
+					{
+			        message++;
+					}
+			        }
+               if(message==2){
+					while(message==2){
+			   GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
+			       delay(30000000);
+			     GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_15,0);
+			   GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+		           delay(30000000);
+		         GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,0);
+			   GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
+			       delay(30000000);
+			     GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_13,0);
+			   GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+			       delay(30000000);
+			     GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,0);
+			   GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
+			       delay(30000000);
+			     GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_15,0);
+			     if(GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0)==ENABLE){
+			     message++;}
 				}
 			}
-			else if(message == 3)
-			{
-				while(message == 3)
-				{
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
-				delay(30000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_12, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-				delay(30000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
-				delay(30000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_15, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-				delay(30000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
+			if(message==3){
+					while(message==3){
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
+					     delay(20000000);
+					  GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_15,0);
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+				         delay(20000000);
+				      GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,0);
+				    GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
+					     delay(20000000);
+					  GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_13,0);
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+			             delay(20000000);
+			          GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,0);
+			        GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
+			             delay(20000000);
+			          GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_15,0);
+			          if(GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0)==ENABLE){
+					     message++;}
 				}
 			}
-			else if(message == 4)
-			{
-				while(message == 4)
-				{
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
-		        delay(10000);
-		        GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_12, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-		        delay(10000);
-		        GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
-		        delay(10000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_15, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-		        delay(10000);
-		        GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
+				if(message==4){
+					while(message==4){
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
+					     delay(10000000);
+					  GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_15,0);
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+					     delay(10000000);
+					  GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,0);
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
+					     delay(10000000);
+					  GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_13,0);
+					GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
+			             delay(10000000);
+			          GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_12,0);
+			        GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
+			             delay(10000000);
+			          GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_15,0);
+			          if(GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0)==ENABLE){
+					message++;}
+					}
 				}
-			}
-			else if(message == 5)
-			{
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_15);
-		        delay(100000000);
-				GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_15, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_13);
-		        delay(100000000);
-		     	GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_13, 0);
-		GPIO_ToggleOutputPin(GPIOD, GPIO_PIN_NO_12);
-		        delay(100000000);
-		    	GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_12, 0);
-			}
-			else if(message == 6)
-			{
-		GPIO_WriteToOutputPin(GPIOD, GPIO_PIN_NO_14, 0);
-			}
+                if(message==5){
+                	delay(50000000);
+                	GPIO_WriteToOutputPin(GPIOD,GPIO_PIN_NO_14,0);
+                }
 		}
 	}
-
 
 }
